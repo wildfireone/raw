@@ -1,3 +1,13 @@
+/**
+ * @Author: John Isaacs <john>
+ * @Date:   22-Sep-172017
+ * @Filename: alluvial.js
+ * @Last modified by:   john
+ * @Last modified time: 22-Sep-172017
+ */
+
+
+
 (function(){
 
 	var graph = raw.models.graph();
@@ -120,6 +130,7 @@
 	    	.data(links)
 	   		.enter().append("path")
 			    .attr("class", "link")
+					.attr("class", function (d){ return d.pidx; })
 			    .attr("d", path )
 			    .style("stroke-width", function(d) { return Math.max(1, d.dy); })
 			    .style("fill","none")
