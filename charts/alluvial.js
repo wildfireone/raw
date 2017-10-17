@@ -146,7 +146,7 @@
 						.attr("linkid", function (d){ return d.lidx })
 						.attr("snodeid", function (d){ return d.pidx })
 						.attr("tnodeid", function (d){ return d.tidx })
-						.attr("sg", function (d){ return d.sg})
+						.attr("group", function (d){ return d.group})
 		      	.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 
 		node.append("rect")
