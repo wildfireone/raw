@@ -27,7 +27,7 @@
 
 	var height = chart.number()
 		.title("Height")
-		.defaultValue(500)
+		.defaultValue(1000)
 
 	var nodeWidth = chart.number()
 		.title("Node Width")
@@ -35,7 +35,7 @@
 
 	var sortBy = chart.list()
         .title("Sort by")
-        .values(['size','name','automatic'])
+        .values(['size','name','automatic','id','id-auto','id-size'])
         .defaultValue('size')
 
 	var colors = chart.color()
@@ -85,9 +85,38 @@
 	    	.forEach(function (d){
 		    	var y = ( height() - d3.sum(d,function(n){ return n.dy+sankey.nodePadding();}) ) / 2 + sankey.nodePadding()/2;
 		    	d.sort(function (a,b){
+						var aid = parseInt(a.sortid);
+						var bid = parseInt(b.sortid);
 		    		if (sortBy() == "automatic") return b.y - a.y;
 		    		if (sortBy() == "size") return b.dy - a.dy;
 		    		if (sortBy() == "name") return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+						if (sortBy() == "id")
+						{
+							if(isNaN(aid)){
+								return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+							}
+							else{
+								return aid < bid ? -1 : aid > bid? 1 : 0;
+							}
+						}
+						if (sortBy() == "id-auto")
+						{
+							if(isNaN(aid)){
+								return b.y - a.y;
+							}
+							else{
+								return aid < bid ? -1 : aid > bid? 1 : 0;
+							}
+						}
+						if (sortBy() == "id-size")
+						{
+							if(isNaN(aid)){
+								return b.dy - a.dy;
+							}
+							else{
+								return aid < bid ? -1 : aid > bid? 1 : 0;
+							}
+						}
 		    	})
 		    	d.forEach(function (node){
 		    		node.y = y;
@@ -138,7 +167,7 @@
 			    .style("fill","none")
 			    .style("stroke", function (d){ return colors()(d.source.name); })
 			    .style("stroke-opacity",".4")
-			    .sort(function(a, b) { return b.dy - a.dy; })
+			    //.sort(function(a, b) { return b.sortid - a.sortid; })
 			    .append("title")
 			    .text(function(d) {  return d.value});
 
