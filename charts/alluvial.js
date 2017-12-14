@@ -3,7 +3,7 @@
  * @Date:   22-Sep-172017
  * @Filename: alluvial.js
  * @Last modified by:   john
- * @Last modified time: 22-Sep-172017
+ * @Last modified time: 13-Dec-172017
  */
 
 
@@ -40,6 +40,8 @@
 
 	var colors = chart.color()
 		.title("Color scale")
+
+		
 
 	chart.draw(function (selection, data){
 
@@ -154,6 +156,8 @@
 		})
 
 	 	colors.domain(links, function (d){ return d.source.name; });
+
+
 
 		var link = g.append("g").selectAll(".link")
 	    	.data(links)
